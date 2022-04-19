@@ -10,8 +10,8 @@ export class Words{
         this.height = 20;
         this.x = x;
         this.y = y;
-        this.speed = 10
-        this.friction = 0.95
+        this.speed = 5;
+        this.friction = 0.96;
         this.word = word;
         this.letters = word.length;
         this.smap = new SpriteMap().spriteMap;
@@ -22,6 +22,9 @@ export class Words{
         this.speedx = 0;
         this.speedy = 0;
         this.colliding = false;
+        this.visibility = true;
+        this.flag = 0;
+        this.visibility=true;
         for (let i = 0; i<this.letters; i++)
         {
             
@@ -38,19 +41,22 @@ export class Words{
 
 
      update = (input, player, allWords) =>{
+         this.visibility = player.wordVisibility;
+         if (this.visibility===true)
+         {
+            const dx = player.x - this.x; 
+            const dy = player.y - this.y;
+            const distance = Math.sqrt(dx*dx + dy*dy);
+            if (!(player.x > this.wordW + this.x || this.x > player.drawnW + player.x || player.y > this.drawnH + this.y || this.y > player.drawnH + player.y))
+            {
         
-        const dx = player.x - this.x; 
-        const dy = player.y - this.y;
-        const distance = Math.sqrt(dx*dx + dy*dy);
-        if (!(player.x > this.wordW + this.x || this.x > player.drawnW + player.x || player.y > this.drawnH + this.y || this.y > player.drawnH + player.y))
-        {
-   
-            var vCollision = {x: player.x - this.x, y: player.y - this.y};
-            var vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
-            this.speedx -= (this.speed * vCollisionNorm.x*0.5);
-            this.speedy -= (this.speed * vCollisionNorm.y*0.5);      
-            
-        }
+                var vCollision = {x: player.x - this.x, y: player.y - this.y};
+                var vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
+                this.speedx -= (this.speed * vCollisionNorm.x*0.5);
+                this.speedy -= (this.speed * vCollisionNorm.y*0.5);      
+                
+            }
+         }
 
         
         for (let i=0; i<allWords.length; i++)
@@ -59,7 +65,7 @@ export class Words{
             if (!(obj1 === this))
             {
                 this.detectCollision(obj1)
-          
+            
                 if (this.colliding)
                 {
                     const dx = obj1.x - this.x; 
@@ -82,7 +88,7 @@ export class Words{
         {
             this.Px[i] += this.speedx;
             this.Py[i] += this.speedy;
-            this.detectEdgeCollisions()
+            this.detectEdgeCollisions(player)
         }
         
         if (Math.abs(this.speedx)>0.5)
@@ -101,44 +107,11 @@ export class Words{
         {
             this.speedy = 0;
         }
-
-
-     
     
-     
-        /*
-        this.x += this.speedx;
-        if (input.keys.indexOf('ArrowRight') > -1)
-        {
-            this.speedx = this.speed;
-        }
-        else if (input.keys.indexOf('ArrowLeft') > -1)
-        {
-            this.speedx = -this.speed
-        }
-        else
-        {
-            this.speedx = 0;
-        }
-        if (this.x<0) this.x = 0;
-        else if (this.x>this.gameW-this.width) this.x = this.gameW  - this.width;
-
-        this.y += this.speedy;
-        if (input.keys.indexOf('ArrowUp') > -1)
-        {
-            this.speedy = -this.speed;
-        }
-        else if (input.keys.indexOf('ArrowDown') > -1)
-        {
-            this.speedy = this.speed
-        }
-        else
-        {
-            this.speedy = 0;
-        }
-        */
+        
 
     }
+
 
     detectCollision(obj1)
     {
@@ -152,11 +125,11 @@ export class Words{
         }
     }
 
-    detectEdgeCollisions()
+    detectEdgeCollisions(obj1)
     {
         const restitution = 0.50;
         // Check for left and right
-        if (this.x < 0){
+        if (this.x < 0){ //disable if chicken go to right
             this.speedx = Math.abs(this.speedx) * restitution;
             this.x = 0;
             for (let i = 0; i<this.letters; i++)
@@ -185,19 +158,21 @@ export class Words{
     
     draw = (ctx) => {
         const image = new Array();
-
-        for (let i = 0; i<this.letters; i++)
+        if (this.visibility === true)
         {
-            image[i] = new Image();
-            image[i].src = alpha;
-            
-        }
-  
-        for (let i=0; i<this.letters; i++)
-        {
-            var letter = this.word.charAt(i)    
-            var k = this.smap[letter];
-            ctx.drawImage(image[i], k[0],k[1], this.width, this.height, this.Px[i],this.Py[i],this.drawnW,this.drawnH);
+            for (let i = 0; i<this.letters; i++)
+            {
+                image[i] = new Image();
+                image[i].src = alpha;
+                
+            }
+    
+            for (let i=0; i<this.letters; i++)
+            {
+                var letter = this.word.charAt(i)    
+                var k = this.smap[letter];
+                ctx.drawImage(image[i], k[0],k[1], this.width, this.height, this.Px[i],this.Py[i],this.drawnW,this.drawnH);
+            }
         }
      
     }
@@ -247,6 +222,7 @@ class SpriteMap{
         this.spriteMap['Z'] = [260,60];
         this.spriteMap['.'] = [280,0];
         this.spriteMap[','] = [240,0];
+        this.spriteMap['!'] = [20,0];
     }
 
 }

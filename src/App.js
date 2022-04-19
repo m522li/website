@@ -2,6 +2,7 @@
 import React, {useEffect} from 'react';
 import { Chicken } from './Components/Chicken';
 import { Words } from './Components/Words';
+import { Arrows } from './Components/Arrows';
 import { InputHandler } from './Components/InputHandler';
 import NavBar from './Components/NavBar';
 import bg from './Components/Photos/Background.png';
@@ -17,12 +18,11 @@ function App() {
   const drawnH = height/24.424;
   const input = new InputHandler();
   var player = new Chicken(width, height);
-  var bio = "HI MY NAME IS MERVIN, I AM CURRENTLY IN MY FOURTH YEAR AT THE UNIVERSITY OF WATERLOO STUDYING COMPUTER ENGINEERING."
+  var bio = "HEY MY NAME IS MERVIN! I AM CURRENTLY IN MY FOURTH YEAR AT THE UNIVERSITY OF WATERLOO STUDYING COMPUTER ENGINEERING. CHECK OUT MY RESUME OR EXPLORE THE PAGE!"
   var paragraph = new Array();
   const wordArray = bio.split(" ");
   var init_x = width/18.58;
   var init_y = height/9.77;
-
 
   for (let i=0; i<wordArray.length; i++)
   {
@@ -36,6 +36,10 @@ function App() {
   }
 
 
+  var arrows = new Arrows(width, height, player)
+
+
+
   useEffect(() => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,12 +51,15 @@ function App() {
 
       player.update(input);
       player.draw(ctx);
+
+      arrows.update(input);
+      arrows.draw(ctx)
       for (let i=0; i<wordArray.length; i++)
       {
         paragraph[i].update(input, player, paragraph);
         paragraph[i].draw(ctx);
       }
-    }, 1000 / 30);
+    }, 100 / 30);
   })
   return (
     <>

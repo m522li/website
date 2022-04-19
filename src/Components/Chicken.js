@@ -12,14 +12,16 @@ export class Chicken{
         this.y = gameH/1.5;
         this.speedx = 0;
         this.speedy = 0;
-        this.speed = 10
+        this.speed = 5
         this.drawnW = gameW/25;   
         this.drawnH = gameH/10.8;
         this.colliding = false;
+        this.wordVisibility = true;
     }
 
 
      update = (input) =>{
+        this.chicken_edge()
         this.x += this.speedx;
         if (input.keys.indexOf('ArrowRight') > -1)
         {
@@ -58,6 +60,22 @@ export class Chicken{
         const image = new Image();
         image.src = chick;
         ctx.drawImage(image,this.x,this.y, this.drawnW,this.drawnH);
+    }
+
+    chicken_edge()
+    {
+        if (this.x>this.gameW-this.gameW*0.05)
+        {
+            this.x = this.gameW - this.x
+            this.wordVisibility = false;
+
+        }
+        else if (this.x<this.gameW*0.01)
+        {
+            this.x = this.gameW*0.85
+            this.wordVisibility = true;
+        }
+        
     }
 }
 
