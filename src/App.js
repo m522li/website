@@ -8,7 +8,7 @@ import NavBar from './Components/NavBar';
 import bg from './Components/Photos/Background.png';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css'
-import resume from './Components/Resume';
+
 
 
 function App() {
