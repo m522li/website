@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Chicken } from './Components/Chicken';
 import { Words } from './Components/Words';
 import { Arrows } from './Components/Arrows';
@@ -8,6 +8,7 @@ import NavBar from './Components/NavBar';
 import bg from './Components/Photos/Background.png';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css'
+import resume from './Components/Resume';
 
 function App() {
   var width = window.innerWidth;
@@ -34,14 +35,10 @@ function App() {
       init_y = init_y + height/19.55;
     }
   }
-
-
   var arrows = new Arrows(width, height, player)
-
-
+  
 
   useEffect(() => {
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     canvas = document.getElementById("myCanvas");
     setInterval(() => {    
@@ -64,9 +61,19 @@ function App() {
   return (
     <>
       <Router>
-        <NavBar />
+        <NavBar/>
+        <Routes>
+          <Route path='/resume' component={resume} />
+        </Routes>
       </Router>
-        <canvas id="myCanvas" width={width} height={height} style={{backgroundImage: `url(${bg})`,backgroundSize:"contain"}}/>
+
+      <div class="container_row">
+        <div class="layer1">
+          <canvas id="myCanvas" width={width} height={height} style={{backgroundImage: `url(${bg})`,backgroundSize:"contain"}}/>
+        </div>
+        
+    </div>
+      
     </>
   
     

@@ -3,3 +3,22 @@ html, body {
     padding: 0 !important;
     color: aqua;
 }
+
+.container_row{
+    display: grid;
+  }
+  
+.layer1, .layer2{
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.pdf{
+  background-color: #e4e4e4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 800px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
