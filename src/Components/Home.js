@@ -1,17 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import { Chicken } from './Components/Chicken';
-import { Words } from './Components/Words';
-import { Arrows } from './Components/Arrows';
-import { InputHandler } from './Components/InputHandler';
-import NavBar from './Components/NavBar';
-import bg from './Components/Photos/Background.png';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import './App.css'
-import resume from './Components/Resume';
+import { Chicken } from './Chicken';
+import { Words } from './Words';
+import { Arrows } from './Arrows';
+import { InputHandler } from './InputHandler';
+import bg from './Photos/Background.png';
+import '../App.css'
 
 
-function App() {
+function Home() {
   var width = window.innerWidth;
   var height = window.innerHeight-74;
   let canvas;
@@ -37,7 +34,6 @@ function App() {
     }
   }
   var arrows = new Arrows(width, height, player)
-  
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,26 +55,17 @@ function App() {
       }
     }, 100 / 30);
   })
-  return (
-    <>
-      <Router>
-        <NavBar/>
-        <Routes>
-          <Route path='/resume' element={<resume/>} />
-        </Routes>
-      </Router>
 
-      <div class="container_row">
-        <div class="layer1">
-          <canvas id="myCanvas" width={width} height={height} style={{backgroundImage: `url(${bg})`,backgroundSize:"contain"}}/>
-        </div>
-        
+  return (
+    <div class="container_row">
+    <div class="layer1">
+      <canvas id="myCanvas" width={width} height={height} style={{backgroundImage: `url(${bg})`,backgroundSize:"contain"}}/>
     </div>
-      
-    </>
+    
+  </div>
   
     
   );
 }
 
-export default App;
+export default Home;

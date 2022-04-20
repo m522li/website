@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import './NavBar.css';
-//import myEvent from '../App'
-import {Button} from './Button';
-
+import pdf from './Photos/resume_for_website.pdf'
 
 function NavBar() {
     const [click, setClick] = useState(false)
@@ -11,7 +9,6 @@ function NavBar() {
     const handleClick = () => setClick(!click)
     const closeMobileMenu = () => setClick(false)
     const refreshPage = () => window.location.reload(false)
-    const showResume = () => window.open('https://www.google.com/')
     const openLinkedIn = () => window.open('https://ca.linkedin.com/in/mervin-li-597109186')
     const openGithub = () => window.open('https://github.com/m522li')
     
@@ -33,7 +30,7 @@ function NavBar() {
           <nav className='navbar'>
             <div className='navbar-container'>
               <Link to='/' className='navbar-reset' onClick={refreshPage}>
-                Reset
+                Mervin Li
               </Link>
               <div className='menu-icon' onClick={handleClick}>
                 <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -45,9 +42,9 @@ function NavBar() {
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to='/resume' className='nav-links' onClick={closeMobileMenu}>
+                <a className="nav-links" href={pdf} target="_blank" rel="noreferrer">
                     Resume
-                  </Link>
+                </a>
                 </li>
                 <li className='nav-item'>
                   <Link
