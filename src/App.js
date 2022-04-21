@@ -4,6 +4,7 @@ import { Chicken } from './Components/Chicken';
 import { Words } from './Components/Words';
 import { Arrows } from './Components/Arrows';
 import { InputHandler } from './Components/InputHandler';
+import CardController from './Components/CardController'
 import NavBar from './Components/NavBar';
 import bg from './Components/Photos/Background.png';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
@@ -72,7 +73,11 @@ function App() {
         <div class="layer1">
           <canvas id="myCanvas" width={width} height={height} style={{backgroundImage: `url(${bg})`,backgroundSize:"contain"}}/>
         </div>
-        
+        <div class="layer2">
+        <div className='Cards'>
+          <CardController></CardController>
+        </div>
+        </div>
     </div>
       
     </>
