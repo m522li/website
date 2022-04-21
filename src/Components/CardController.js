@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import React, { useState,Component } from "react";
 import "./CardController.css";
 import Cards from "./Cards";
 import rw from './Photos/rogue.jpg'
 import es from './Photos/eSentire.jpg'
 import vm from './Photos/vm.jpg'
 import ka from './Photos/ka.jpg'
-
 import "./CardController.css";
 
 
@@ -43,7 +42,7 @@ class CardController extends Component {
         desc: "waaaaaaaa"
       }
     },
-    showNav: false
+    showNav: false,
   };
   click = id => {
     const cards = Object.create(this.state.cards);
@@ -54,15 +53,13 @@ class CardController extends Component {
         cards[key].show = !cards[key].show;
         cards[key].expand = !cards[key].expand
         showNav = !cards[key].show;
-        
       }
     }
     this.setState({ cards, showNav });
   };
 
   render() {
-    const { cards, showNav } = this.state;
-    console.log(this.state);
+    const { cards, showNav} = this.state;
     let currentCards = [];
     for (let key in cards) {
       currentCards.push(
@@ -79,8 +76,8 @@ class CardController extends Component {
       );
     }
     return (
-      <div class="container">
-        <div class="row">{currentCards}</div>
+      <div className="container">
+        <div className="row">{currentCards}</div>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import chick from './Photos/chicken.png'
-
+import eventBus from "./Events";
 export class Chicken{
 
 
@@ -64,16 +64,20 @@ export class Chicken{
 
     chicken_edge()
     {
-        if (this.x>this.gameW-this.gameW*0.05)
+        if (this.x>this.gameW-this.gameW*0.1)
         {
             this.x = this.gameW - this.x
             this.wordVisibility = false;
+            this.speed = 3;
+            eventBus.dispatch("showCards", { show: "visible" })
 
         }
         else if (this.x<this.gameW*0.01)
         {
             this.x = this.gameW*0.85
             this.wordVisibility = true;
+            this.speed = 5;
+            eventBus.dispatch("showCards", { show: "hidden" })
         }
         
     }

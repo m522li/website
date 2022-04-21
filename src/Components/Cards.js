@@ -9,7 +9,7 @@ function Cards({click, show, id, text, src, desc, expand}) {
    
 
     return(
-        <motion.div class="box-part text-center">
+        <motion.div className="box-part text-center">
         <motion.div transition={{layout:{duration: 1, type:"spring"}}} className="card" onClick={e => click(id)}
         style={{borderRadius: '2rem', boxShadow: '0px 10px 30px rgba(0,0,0,0.5)'}}>
         

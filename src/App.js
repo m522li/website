@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { Chicken } from './Components/Chicken';
 import { Words } from './Components/Words';
 import { Arrows } from './Components/Arrows';
 import { InputHandler } from './Components/InputHandler';
-import CardController from './Components/CardController'
+import Home from './Components/Home';
 import NavBar from './Components/NavBar';
-import bg from './Components/Photos/Background.png';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css'
-
 
 
 function App() {
@@ -27,6 +25,7 @@ function App() {
   var init_x = width/18.58;
   var init_y = height/9.77;
 
+
   for (let i=0; i<wordArray.length; i++)
   {
     paragraph[i] = new Words(width, height, wordArray[i], init_x, init_y, drawnW, drawnH)
@@ -38,8 +37,6 @@ function App() {
     }
   }
   var arrows = new Arrows(width, height, player)
-  
-
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     canvas = document.getElementById("myCanvas");
@@ -47,7 +44,7 @@ function App() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       ctx = canvas.getContext("2d");
       ctx.clearRect(0,0,width,height);
-
+      
       player.update(input);
       player.draw(ctx);
 
@@ -64,25 +61,9 @@ function App() {
     <>
       <Router>
         <NavBar/>
-        <Routes>
-          <Route path='/resume' element={<resume/>} />
-        </Routes>
       </Router>
-
-      <div class="container_row">
-        <div class="layer1">
-          <canvas id="myCanvas" width={width} height={height} style={{backgroundImage: `url(${bg})`,backgroundSize:"contain"}}/>
-        </div>
-        <div class="layer2">
-        <div className='Cards'>
-          <CardController></CardController>
-        </div>
-        </div>
-    </div>
-      
+      <Home></Home>
     </>
-  
-    
   );
 }
 
