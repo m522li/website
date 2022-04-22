@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useState, Component} from 'react';
-import { Chicken } from './Chicken';
-import { Arrows } from './Arrows';
-import { InputHandler } from './InputHandler';
+import React, {Component} from 'react';
+
 import CardController from './CardController'
 import bg from './Photos/Background.png';
 import '../App.css'
@@ -32,10 +30,7 @@ class Home extends Component {
 
   render() {
     var {width, height} = this.state;
-    var input= new InputHandler();
-    var player=  new Chicken(width, height);
-    var arrows= new Arrows(width, height, player);
-
+   
    
     return (
       <div className="container_row">

@@ -4,10 +4,12 @@ import { Chicken } from './Components/Chicken';
 import { Words } from './Components/Words';
 import { Arrows } from './Components/Arrows';
 import { InputHandler } from './Components/InputHandler';
+import {InterObj} from './Components/InteractableObjects'
 import Home from './Components/Home';
 import NavBar from './Components/NavBar';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css'
+import s2 from './Components/Photos/sign2.png'
 
 
 function App() {
@@ -28,7 +30,7 @@ function App() {
 
   for (let i=0; i<wordArray.length; i++)
   {
-    paragraph[i] = new Words(width, height, wordArray[i], init_x, init_y, drawnW, drawnH)
+    paragraph[i] = new Words(width, height, wordArray[i], init_x, init_y, drawnW, drawnH, 1)
     init_x = paragraph[i].lastpos + drawnW*1.4;
     if (init_x > width-width/6.2) 
     {
@@ -36,7 +38,26 @@ function App() {
       init_y = init_y + height/19.55;
     }
   }
-  var arrows = new Arrows(width, height, player)
+  var bio2 = "CLICK ONE FOR MORE INFO!"
+  var paragraph2 = new Array();
+  const wordArray2 = bio2.split(" ");
+  var init_x2 = width/3;
+  var init_y2 = height/9.77;
+  for (let i=0; i<wordArray2.length; i++)
+  {
+    paragraph2[i] = new Words(width, height, wordArray2[i], init_x2, init_y2, drawnW, drawnH, 2)
+    init_x2 = paragraph2[i].lastpos + drawnW*1.4;
+    if (init_x2 > width-width/6.2) 
+    {
+      init_x2 = width/18.58;
+      init_y2 = init_y2 + height/19.55;
+    }
+  }
+
+  var arrows = new Arrows(width, height, player);
+  var interobj1 = new InterObj(width, height, s2, player.x+width/3, player.y, drawnW*5, drawnH*5, 1);
+  var allObj = paragraph;
+  allObj.push(interobj1);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     canvas = document.getElementById("myCanvas");
@@ -50,10 +71,19 @@ function App() {
 
       arrows.update(input);
       arrows.draw(ctx)
+
+      interobj1.update(player, allObj);
+      interobj1.draw(ctx);
+      
       for (let i=0; i<wordArray.length; i++)
       {
-        paragraph[i].update(input, player, paragraph);
+        paragraph[i].update(player, allObj);
         paragraph[i].draw(ctx);
+      }
+      for (let i=0; i<wordArray2.length; i++)
+      {
+        paragraph2[i].update(player, paragraph2);
+        paragraph2[i].draw(ctx);
       }
     }, 100 / 30);
   })

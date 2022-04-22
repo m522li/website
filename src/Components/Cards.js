@@ -3,8 +3,14 @@ import { motion } from "framer-motion";
 import './Cards.css'
 
 
-function Cards({click, show, id, text, src, desc, expand}) {
-
+function Cards({click, show, id, text, src, desc, expand, location}) {
+    const sentances = desc.split(".");
+    let currentPoints = [];
+    for (let i in sentances) {
+        currentPoints.push(
+          <li>{sentances[i]}</li>
+        );
+      }
     if (!show) return null;
    
 
@@ -19,9 +25,11 @@ function Cards({click, show, id, text, src, desc, expand}) {
             {expand && (
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 1}} className="expand">
             <h2>{text}</h2>
-            <p>
-                {desc}
-            </p> 
+            <h3>{location}</h3>
+            <div>&nbsp;</div>
+            <ul>
+            {currentPoints}
+            </ul>
             </motion.div>
             )}
         </motion.div>

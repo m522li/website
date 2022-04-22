@@ -1,40 +1,23 @@
-import alpha from './Photos/Alphabet2.png'
-export class Words{
+export class InterObj{
     
-    constructor(gameW,gameH, word, x, y, drawnW, drawnH, page){
+    constructor(gameW,gameH, image, x, y, drawnW, drawnH, page){
         this.gameW = gameW;
         this.gameH = gameH;
-        this.width = 20;
-        this.height = 20;
         this.x = x;
         this.y = y;
         this.speed = 5;
         this.friction = 0.96;
-        this.word = word;
-        this.letters = word.length;
-        this.smap = new SpriteMap().spriteMap;
         this.drawnW = drawnW;   
         this.drawnH = drawnH;
-        this.Px = new Array();
-        this.Py = new Array();
         this.speedx = 0;
         this.speedy = 0;
         this.colliding = false;
         this.visibility = true;
-        this.visibility=true;
         this.page = page;
-        for (let i = 0; i<this.letters; i++)
-        {
-            
-            this.Px[i] = this.x+i*drawnW/1.25;
-            if ((this.word.charAt(i)===',')||(this.word.charAt(i)===','))
-            {
-                this.Px[i] -= 10;
-            }
-            this.Py[i] = this.y;  
-        }
-        this.lastpos = this.Px[this.letters-1];
-        this.wordW = this.Px[this.letters-1] - this.Px[0]+drawnW
+        this.Px = x;
+        this.Py = y;
+        this.wordW = this.drawnW;
+        this.image = image;
     }
 
 
@@ -97,12 +80,10 @@ export class Words{
 
         this.x += this.speedx;
         this.y += this.speedy;
-        for (let i = 0; i<this.letters; i++)
-        {
-            this.Px[i] += this.speedx;
-            this.Py[i] += this.speedy;
-            this.detectEdgeCollisions()
-        }
+        this.Px += this.speedx;
+        this.Py += this.speedy;
+        this.detectEdgeCollisions()
+
         
         if (Math.abs(this.speedx)>0.5)
         {
@@ -145,21 +126,16 @@ export class Words{
         if (this.x < 0){ //disable if chicken go to right
             this.speedx = Math.abs(this.speedx) * restitution;
             this.x = 0;
-            for (let i = 0; i<this.letters; i++)
-            {
-                this.Px[i] = 0+i*35;
-            }
+            this.Px = 0;
+
         }else if (this.x > this.gameW - this.wordW){
             this.speedx = -Math.abs(this.speedx) * restitution;
             this.x = this.gameW - this.wordW;
-            for (let i = 0; i<this.letters; i++)
-            {
-                this.Px[i] = this.x+i*35;
-            }
+            this.Px = this.x;
         }
 
         // Check for bottom and top
-        if (this.y< 0){
+        if (this.y< this.drawnH/2){
             this.speedy = Math.abs(this.speedy) * restitution;
             this.y = this.drawnH/2;
         } else if (this.y > this.gameH  - this.drawnH/2){
@@ -170,90 +146,26 @@ export class Words{
     }
     
     draw = (ctx) => {
-        const image = new Array();
+    
         if ((this.visibility === true)&&(this.page===1))
         {
-            for (let i = 0; i<this.letters; i++)
-            {
-                image[i] = new Image();
-                image[i].src = alpha;
-                
-            }
-    
-            for (let i=0; i<this.letters; i++)
-            {
-                var letter = this.word.charAt(i)    
-                var k = this.smap[letter];
-                ctx.drawImage(image[i], k[0],k[1], this.width, this.height, this.Px[i],this.Py[i],this.drawnW,this.drawnH);
-            }
+
+            var image = new Image();
+            image.src = this.image;
+            ctx.drawImage(image, this.Px,this.Py,this.drawnW,this.drawnH);
+        
         }
         else if ((this.visibility === false)&&(this.page===2))
         {
-            for (let i = 0; i<this.letters; i++)
-            {
-                image[i] = new Image();
-                image[i].src = alpha;
-                
-            }
-    
-            for (let i=0; i<this.letters; i++)
-            {
-                var letter = this.word.charAt(i)    
-                var k = this.smap[letter];
-                ctx.drawImage(image[i], k[0],k[1], this.width, this.height, this.Px[i],this.Py[i],this.drawnW,this.drawnH);
-            }
+            var image = new Image();
+            image.src = this.image;;
+            ctx.drawImage(image, this.Px,this.Py,this.drawnW,this.drawnH);
         }
      
     }
 }
 
 
-class SpriteMap{
-    constructor()
-    {
-        this.spriteMap = {};
-        this.spriteMap[' '] = [0,0];
-        this.spriteMap['0'] = [20,20];
-        this.spriteMap['1'] = [40,20];
-        this.spriteMap['2'] = [60,20];
-        this.spriteMap['3'] = [80,20];
-        this.spriteMap['4'] = [100,20];
-        this.spriteMap['5'] = [120,20];
-        this.spriteMap['6'] = [140,20];
-        this.spriteMap['7'] = [160,20];
-        this.spriteMap['8'] = [180,20];
-        this.spriteMap['9'] = [200,20];
-        this.spriteMap['A'] = [60,40];
-        this.spriteMap['B'] = [80,40];
-        this.spriteMap['C'] = [100,40];
-        this.spriteMap['D'] = [120,40];
-        this.spriteMap['E'] = [140,40];
-        this.spriteMap['F'] = [160,40];
-        this.spriteMap['G'] = [180,40];
-        this.spriteMap["H"] = [200,40];
-        this.spriteMap['I'] = [220,40];
-        this.spriteMap['J'] = [240,40];
-        this.spriteMap['K'] = [260,40];
-        this.spriteMap['L'] = [280,40];
-        this.spriteMap['M'] = [0,60];
-        this.spriteMap['N'] = [21,60];
-        this.spriteMap['O'] = [40,60];
-        this.spriteMap['P'] = [60,60];
-        this.spriteMap['Q'] = [80,60];
-        this.spriteMap['R'] = [100,60];
-        this.spriteMap['S'] = [120,60];
-        this.spriteMap['T'] = [140,60];
-        this.spriteMap['U'] = [160,60];
-        this.spriteMap['V'] = [179,60];
-        this.spriteMap['W'] = [200,60];
-        this.spriteMap['X'] = [220,60];
-        this.spriteMap['Y'] = [240,60];
-        this.spriteMap['Z'] = [260,60];
-        this.spriteMap['.'] = [280,0];
-        this.spriteMap[','] = [240,0];
-        this.spriteMap['!'] = [20,0];
-    }
 
-}
 
-export default Words;
+export default InterObj;
