@@ -12,7 +12,7 @@ export class Chicken{
         this.y = gameH/1.5;
         this.speedx = 0;
         this.speedy = 0;
-        this.speed = 5
+        this.speed = gameW/200;
         this.drawnW = gameW/25;   
         this.drawnH = gameH/10.8;
         this.colliding = false;
@@ -68,7 +68,7 @@ export class Chicken{
         {
             this.x = this.gameW - this.x
             this.wordVisibility = false;
-            this.speed = 3;
+            this.speed = this.gameW/350
             eventBus.dispatch("showCards", { show: "visible" })
 
         }
@@ -76,7 +76,7 @@ export class Chicken{
         {
             this.x = this.gameW*0.85
             this.wordVisibility = true;
-            this.speed = 5;
+            this.speed = this.gameW/200
             eventBus.dispatch("showCards", { show: "hidden" })
         }
         
